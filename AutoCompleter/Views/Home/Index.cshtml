@@ -1,0 +1,55 @@
+﻿@model IEnumerable<AutoCompleter.Models.Nimed>
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Autocompleter</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Otsing emakeelne nimide järgi: @Html.TextBox("SearchString")
+        <input type="submit" value="Otsing" class="btn btn-primary" />
+    </p>
+}
+<br>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Sugu", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Emakeelne nimi", "Index", new { sortOrder = ViewBag.NameSortParm1 })
+        </th>
+        <th>
+            @Html.ActionLink("Võõrkeelne nimi", "Index", new { sortOrder = ViewBag.NameSortParm2 })
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sugu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Emakeelnenimi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Voorkeelnenimi)
+            </td>
+            @if (Request.IsAuthenticated)
+            {
+                <td>
+                    @Html.ActionLink("Redigeeri", "EditNimi", new { id = item.Id }) |
+                    @Html.ActionLink("Kustuta", "Delete", new { id = item.Id })
+                </td>
+}
+            else
+            {
+            }
+        </tr>
+    }
+</table>
+
